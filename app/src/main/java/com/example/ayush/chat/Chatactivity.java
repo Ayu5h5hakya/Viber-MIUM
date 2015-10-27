@@ -3,6 +3,8 @@ package com.example.ayush.chat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,7 @@ import org.json.JSONObject;
  * Created by Ayush on 10/27/2015.
  */
 public class Chatactivity extends AppCompatActivity {
-    ListView chathistory;
+    RecyclerView chathistory;
     EditText message;
     Button sendbutton;
     ConnectionDaemon connectionDaemon;
@@ -27,11 +29,15 @@ public class Chatactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_layout);
-        chathistory = (ListView) findViewById(R.id.chathistory);
+        chathistory = (RecyclerView) findViewById(R.id.chathistory);
         message = (EditText) findViewById(R.id.newmessage);
         sendbutton = (Button) findViewById(R.id.send);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        chathistory.setLayoutManager(linearLayoutManager);
         chat_adapter = new Adapter(this);
         chathistory.setAdapter(chat_adapter);
+
         connectionDaemon = new ConnectionDaemon();
         connectionDaemon.execute();
         sendbutton.setOnClickListener(new View.OnClickListener() {
@@ -86,5 +92,11 @@ public class Chatactivity extends AppCompatActivity {
                 catch (JSONException e) {}
             }
         };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainActivity.socket.disconnect();
     }
 }
