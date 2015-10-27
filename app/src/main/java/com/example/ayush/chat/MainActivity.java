@@ -1,6 +1,7 @@
 package com.example.ayush.chat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -19,24 +20,56 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
 
 public class MainActivity extends AppCompatActivity {
+    private String MASTER_PASS="ayushdagrt";
+    public static String USER_NAME_TAG = "USER_NAME";
     Button connect;
     private String message2send;
     static Socket socket;
-    TextView serverreply;
+    TextView code_validation;
+    EditText name_field,pass_field;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        connect = (Button) findViewById(R.id.checkcode);
+        code_validation = (TextView) findViewById(R.id.code_status);
+        name_field = (EditText) findViewById(R.id.user_name);
+        pass_field = (EditText) findViewById(R.id.pass_code);
         setSupportActionBar(toolbar);
-        try {
-            socket = IO.socket("http://192.168.1.104:8888");
-            socket.connect();
-        } catch (URISyntaxException e) {}
-        Intent intent = new Intent("android.intent.action.chatactivity");
-        startActivity(intent);
 
-        Toast.makeText(this,"conected",Toast.LENGTH_LONG).show();
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String entered_user= name_field.getText().toString();
+                String entered_code = pass_field.getText().toString();
+                if(!entered_user.isEmpty() && entered_code.equals(MASTER_PASS))
+                {
+                    code_validation.setTextColor(Color.GREEN);
+                    code_validation.setText("Welcome");
+                    try {
+                        socket = IO.socket("http://192.168.1.104:8888");
+                        socket.connect();
+                    } catch (URISyntaxException e) {}
+                    Intent intent = new Intent("android.intent.action.chatactivity");
+                    intent.putExtra(USER_NAME_TAG,entered_user);
+                    startActivity(intent);
+
+                }
+                else if(!entered_code.equals(MASTER_PASS))
+                {
+                    code_validation.setTextColor(Color.RED);
+                    code_validation.setText("password is incorrect");
+                }
+                else
+                {
+                    code_validation.setTextColor(Color.RED);
+                    code_validation.setText("User name should not be empty!");
+
+                }
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,19 +79,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*sendmsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message2send=message.getText().toString();
-                if(message2send.isEmpty())return;
-                else
-                {
-                    socket.emit("message",message2send);
-                    message.setText("");
-
-                }
-            }
-        });*/
     }
 
     @Override

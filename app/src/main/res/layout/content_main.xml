@@ -9,9 +9,27 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter user name"
+        android:id="@+id/user_name"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter pass code"
+        android:layout_below="@+id/user_name"
+        android:id="@+id/pass_code"
+        android:password="true"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pass_code"
+        android:text="enter room"
+        android:id="@+id/checkcode"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PAGE IS UNDER CONSTRUCTION.....\n\nDEVELOPER AT WORK"/>
-
+        android:layout_below="@id/checkcode"
+        android:id="@+id/code_status"/>
 </RelativeLayout>

@@ -21,6 +21,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         chatmessages = new ArrayList<>();
     }
 
+    Adapter(Context context,ArrayList<String> previousmessages){
+        this.context = context;
+        chatmessages = previousmessages;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.childrow,parent,false);
