@@ -14,17 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
-
-import java.net.URISyntaxException;
-
 public class MainActivity extends AppCompatActivity {
-    private String MASTER_PASS="ayushdagrt";
+    private String MASTER_PASS="a";
     public static String USER_NAME_TAG = "USER_NAME";
     Button connect;
     private String message2send;
-    static Socket socket;
+//    static Socket socket;
     TextView code_validation;
     EditText name_field,pass_field;
 
@@ -39,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         pass_field = (EditText) findViewById(R.id.pass_code);
         setSupportActionBar(toolbar);
 
-        connect.setOnClickListener(new View.OnClickListener() {
+
+        connect.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 String entered_user= name_field.getText().toString();
@@ -48,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     code_validation.setTextColor(Color.GREEN);
                     code_validation.setText("Welcome");
-                    try {
-                        socket = IO.socket("http://192.168.1.104:8888");
-                        socket.connect();
-                    } catch (URISyntaxException e) {}
                     Intent intent = new Intent("android.intent.action.chatactivity");
                     intent.putExtra(USER_NAME_TAG,entered_user);
                     startActivity(intent);
