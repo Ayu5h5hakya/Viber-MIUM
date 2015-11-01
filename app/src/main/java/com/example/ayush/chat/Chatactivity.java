@@ -38,6 +38,7 @@ public class Chatactivity extends AppCompatActivity {
     Calendar calendar;
     SocketIO socketIO;
     String username;
+    public static  int text_gravity=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +80,9 @@ public class Chatactivity extends AppCompatActivity {
                     Chat_Sugar record = new Chat_Sugar(username,"qwerty",message2send,calendar.getTime());
                     record.save();
                     Adapter.chatmessages.add(username + " : " + message2send);
+                    text_gravity =0;
                     chat_adapter.notifyDataSetChanged();
-                    socketIO.emit("message", message2send);
+                    socketIO.emit("message", message2send,"qwerty");
                     message.setText("");
                     mediaPlayer.start();
                 }
@@ -142,6 +144,7 @@ public class Chatactivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                text_gravity =1;
                                 Adapter.chatmessages.add(temp);
                                 chat_adapter.notifyDataSetChanged();
                             }

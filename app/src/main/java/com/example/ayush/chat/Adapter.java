@@ -35,6 +35,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         holder.message.setText(chatmessages.get(position));
     }
 
@@ -56,7 +57,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            message = (TextView) itemView.findViewById(R.id.messgeview);
+             message = (TextView) itemView.findViewById(R.id.messgeview);
+
 
         }
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_pic"
+        android:src="@drawable/ic_launcher"
+        android:padding="15dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photoextractor"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/profile_pic"
+            android:layout_alignLeft="@+id/profile_pic"
+            android:id="@+id/gallery"
+            android:text="Choose from gallery"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/profile_pic"
+            android:layout_alignLeft="@+id/profile_pic"
+            android:layout_below="@+id/gallery"
+            android:text="Take a photo"
+            android:padding="5dp"/>
+    </LinearLayout>
+</LinearLayout>
